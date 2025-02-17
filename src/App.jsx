@@ -114,7 +114,7 @@ function App() {
 
 <ToDoListComponent initialItems={todoList}  />
 
-<Events eve/>
+<Events />
 
 
 
