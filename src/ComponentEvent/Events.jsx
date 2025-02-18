@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Alert } from 'react-bootstrap';
 import Event from './Event';
 import eventsData from '../data/events.json';
@@ -6,6 +6,17 @@ import eventsData from '../data/events.json';
 const Events = () => {
     const [events, setEvents] = useState(eventsData);
     const [showAlert, setShowAlert] = useState(false);
+    const [showWelcome, setShowWelcome] = useState(false);
+
+    useEffect(() => {
+        setShowWelcome(true);
+        
+        const timer = setTimeout(() => {
+            setShowWelcome(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []); 
 
     const buyTicket = (eventName) => {
         setEvents(events.map(event => {
@@ -25,6 +36,11 @@ const Events = () => {
 
     return (
         <Container className="mt-4">
+            {showWelcome && (
+                <Alert variant="info" className="mb-4">
+                    Hey welcome to Esprit Events
+                </Alert>
+            )}
             {showAlert && (
                 <Alert variant="success" className="mb-4">
                     You have booked an event

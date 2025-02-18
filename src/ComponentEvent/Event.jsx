@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Button } from 'react-bootstrap';
 
 const Event = ({ event, onBook }) => {
+    const [isLiked, setIsLiked] = useState(false);
     const isSoldOut = event.tickets === 0;
+
+    const handleLikeClick = () => {
+        setIsLiked(!isLiked);
+    };
 
     return (
         <Col md={4} className="mb-4">
@@ -19,13 +24,21 @@ const Event = ({ event, onBook }) => {
                         Number of tickets: {event.tickets}<br/>
                         Number of participants: {event.participants}
                     </Card.Text>
-                    <Button 
-                        variant="primary" 
-                        onClick={onBook}
-                        disabled={isSoldOut}
-                    >
-                        {isSoldOut ? 'Sold Out' : 'Book an event'}
-                    </Button>
+                    <div className="d-flex gap-2">
+                        <Button 
+                            variant={isLiked ? "danger" : "primary"}
+                            onClick={handleLikeClick}
+                        >
+                            {isLiked ? 'Dislike' : 'Like'}
+                        </Button>
+                        <Button 
+                            variant="primary" 
+                            onClick={onBook}
+                            disabled={isSoldOut}
+                        >
+                            {isSoldOut ? 'Sold Out' : 'Book an event'}
+                        </Button>
+                    </div>
                 </Card.Body>
             </Card>
         </Col>
